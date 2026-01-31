@@ -7,16 +7,42 @@ public class PlayerHealth : MonoBehaviour
     public float InvulnDuration = 1f;
 
     public int CurrentHP { get; private set; }
-    public bool IsInvulnerable { get; private set; }
+
+    private bool localIFramesActive = false;
+    private DashMovement dash;
+
+    private void Awake()
+    {
+        dash = GetComponent<DashMovement>();
+    }
 
     private void Start()
     {
         CurrentHP = MaxHP;
     }
 
-    public void Damage(int amount)
+    public bool IsInvulnerable
+    {
+        get
+        {
+            if (dash != null && dash.IsInvulnerable) return true;
+            if (localIFramesActive) return true;
+
+            // Add more checks later:
+            // if (parry.IsActive) return true;
+            // if (shield.IsBlocking) return true;
+            // if (cutscene.IsPlaying) return true;
+
+            return false;
+        }
+    }
+
+    public void Damage(int amount, GameObject hit)
     {
         if (IsInvulnerable) return;
+
+        if (hit)
+            hit.gameObject.SetActive(false);
 
         CurrentHP -= amount;
         if (CurrentHP <= 0)
@@ -31,20 +57,19 @@ public class PlayerHealth : MonoBehaviour
 
     private IEnumerator InvulnRoutine()
     {
-        IsInvulnerable = true;
+        localIFramesActive = true;
         yield return new WaitForSeconds(InvulnDuration);
-        IsInvulnerable = false;
+        localIFramesActive = false;
     }
 
     private void Die()
     {
-        // TODO: death handling, restart, etc.
         gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Bullet"))
-            Damage(1);
+            Damage(1, other.gameObject);
     }
 }

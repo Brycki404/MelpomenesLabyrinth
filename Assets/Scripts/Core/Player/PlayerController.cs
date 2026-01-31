@@ -6,21 +6,32 @@ public class PlayerController : MonoBehaviour
     public float FocusSpeed = 3f;
 
     private Rigidbody2D rb;
+    private DashMovement dash;
+    private Vector2 moveInput;
 
-    private void Awake()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        dash = GetComponent<DashMovement>();
     }
 
-    private void Update()
+    void Update()
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
+        moveInput = new Vector2(h, v).normalized;
 
-        Vector2 move = new Vector2(h, v).normalized;
+        if (Input.GetKeyDown(KeyCode.Q))
+            dash.TryStartDash();
 
-        float s = Input.GetKey(KeyCode.LeftShift) ? FocusSpeed : Speed;
+        dash.TickDash();
 
-        rb.linearVelocity = move * s;
+        if (!dash.IsDashing)
+        {
+            float s = Input.GetKey(KeyCode.LeftShift) ? FocusSpeed : Speed;
+            rb.linearVelocity = moveInput * s;
+        }
     }
+
+    public Vector2 GetMoveInput() => moveInput;
 }
