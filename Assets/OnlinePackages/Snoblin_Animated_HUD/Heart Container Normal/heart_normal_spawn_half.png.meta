@@ -397,7 +397,18 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      heart_normal_spawn_half_0: -8695801078257939728
+      heart_normal_spawn_half_1: 3936120789392330085
+      heart_normal_spawn_half_10: 474756286231491931
+      heart_normal_spawn_half_2: -934277088795807097
+      heart_normal_spawn_half_3: 8175486297371206975
+      heart_normal_spawn_half_4: 7772815596854241065
+      heart_normal_spawn_half_5: 8581868215815692739
+      heart_normal_spawn_half_6: 2399973637655595010
+      heart_normal_spawn_half_7: 8823054505063661788
+      heart_normal_spawn_half_8: 8515925120997094129
+      heart_normal_spawn_half_9: 929855626434862736
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

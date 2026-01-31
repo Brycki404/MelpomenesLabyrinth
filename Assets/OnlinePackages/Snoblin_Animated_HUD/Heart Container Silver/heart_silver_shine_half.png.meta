@@ -272,7 +272,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      heart_silver_shine_half_0: -6758690884564060847
+      heart_silver_shine_half_1: -9186703450859288648
+      heart_silver_shine_half_2: -5589955884330425780
+      heart_silver_shine_half_3: -8197981471733342977
+      heart_silver_shine_half_4: -6029665417334896874
+      heart_silver_shine_half_5: 4244854336306958981
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

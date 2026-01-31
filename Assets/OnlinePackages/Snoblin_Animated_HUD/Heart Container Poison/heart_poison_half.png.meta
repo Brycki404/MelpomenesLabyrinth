@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      heart_poison_half_0: -1740218920876179665
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

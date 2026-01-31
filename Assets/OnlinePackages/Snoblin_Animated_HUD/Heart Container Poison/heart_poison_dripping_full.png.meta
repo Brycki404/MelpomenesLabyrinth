@@ -272,7 +272,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      heart_poison_dripping_full_0: -2425251116562468769
+      heart_poison_dripping_full_1: 2897829688900712927
+      heart_poison_dripping_full_2: -2015633271369280038
+      heart_poison_dripping_full_3: -4120679600128719562
+      heart_poison_dripping_full_4: -1712533620212258775
+      heart_poison_dripping_full_5: -2397803841825140019
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

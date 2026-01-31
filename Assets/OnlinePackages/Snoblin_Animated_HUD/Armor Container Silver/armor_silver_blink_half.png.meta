@@ -197,7 +197,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      armor_silver_blink_half_0: 7250680420077296827
+      armor_silver_blink_half_1: 6717120515924362868
+      armor_silver_blink_half_2: -1594876911473726327
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -297,7 +297,14 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      armor_golden_shine_half_0: 1073186650280496246
+      armor_golden_shine_half_1: -8573260063038249653
+      armor_golden_shine_half_2: -4907169968480079671
+      armor_golden_shine_half_3: 7379085788498443357
+      armor_golden_shine_half_4: 7092304260618116732
+      armor_golden_shine_half_5: -7250908594487902260
+      armor_golden_shine_half_6: 7836249419732040928
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -322,7 +322,15 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      heart_poison_transform_half_0: -3942765209465412867
+      heart_poison_transform_half_1: -742324291488383551
+      heart_poison_transform_half_2: -8634290804550116600
+      heart_poison_transform_half_3: -656860844221917272
+      heart_poison_transform_half_4: -4477409539868972144
+      heart_poison_transform_half_5: 3206098121262368596
+      heart_poison_transform_half_6: -186782502235526361
+      heart_poison_transform_half_7: -363168112510571435
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

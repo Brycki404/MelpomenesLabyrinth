@@ -197,7 +197,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      heart_poison_blink_half_0: -2175577081040215268
+      heart_poison_blink_half_1: 7190886493752744863
+      heart_poison_blink_half_2: 8455647715277525807
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

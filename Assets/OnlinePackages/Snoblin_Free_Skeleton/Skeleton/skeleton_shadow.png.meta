@@ -1172,7 +1172,49 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      skeleton_shadow_0: 1875877238647030180
+      skeleton_shadow_1: 4472295340934657716
+      skeleton_shadow_10: -4007359229254274315
+      skeleton_shadow_11: -4404561760815201543
+      skeleton_shadow_12: 3649464287897133299
+      skeleton_shadow_13: 7890739675051894569
+      skeleton_shadow_14: -6505672177633205138
+      skeleton_shadow_15: -1172978250003042818
+      skeleton_shadow_16: -2899993876946846523
+      skeleton_shadow_17: -8956035423145824195
+      skeleton_shadow_18: -402792198318268616
+      skeleton_shadow_19: -5799549237607382284
+      skeleton_shadow_2: 6150126678140956599
+      skeleton_shadow_20: 7225633187113376407
+      skeleton_shadow_21: 9046921062949861146
+      skeleton_shadow_22: 4171654761419368746
+      skeleton_shadow_23: -9213404989663668540
+      skeleton_shadow_24: 4968461716971243166
+      skeleton_shadow_25: 580456075588659634
+      skeleton_shadow_26: 647819321859659779
+      skeleton_shadow_27: -8323869406996650912
+      skeleton_shadow_28: 2270810863281499492
+      skeleton_shadow_29: 7727583035803441059
+      skeleton_shadow_3: 2614523507229224488
+      skeleton_shadow_30: -615084789924095756
+      skeleton_shadow_31: -5966277523912907801
+      skeleton_shadow_32: 7203053431713428619
+      skeleton_shadow_33: -5587018183887837835
+      skeleton_shadow_34: -2177797163286348505
+      skeleton_shadow_35: -52618789601522108
+      skeleton_shadow_36: -6242831320829011228
+      skeleton_shadow_37: 5307994820308522466
+      skeleton_shadow_38: 6607362209373782795
+      skeleton_shadow_39: -2122013912265598375
+      skeleton_shadow_4: -6196129028537720838
+      skeleton_shadow_40: -5617813105454328535
+      skeleton_shadow_41: 8219178957844369906
+      skeleton_shadow_5: 7055044646892616508
+      skeleton_shadow_6: 5952957347745708518
+      skeleton_shadow_7: -6946052553976216462
+      skeleton_shadow_8: -4018556235200750906
+      skeleton_shadow_9: 1922173193414742856
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

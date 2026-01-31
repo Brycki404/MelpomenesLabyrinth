@@ -322,7 +322,15 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      heart_silver_transform_full_0: -1148728657296542960
+      heart_silver_transform_full_1: 4659502474040465204
+      heart_silver_transform_full_2: 6875405081324199545
+      heart_silver_transform_full_3: 6880258675619929120
+      heart_silver_transform_full_4: -1292571067196561547
+      heart_silver_transform_full_5: -8626145806925706973
+      heart_silver_transform_full_6: 7170425030187372009
+      heart_silver_transform_full_7: -6025860374574586836
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -197,7 +197,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      heart_silver_blink_full_0: 5218991108035847830
+      heart_silver_blink_full_1: 3509837045709409087
+      heart_silver_blink_full_2: 2429117257129958046
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
