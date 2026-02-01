@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Boss Health Gradient_0: -398360987621571626
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

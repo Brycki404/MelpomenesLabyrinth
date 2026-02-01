@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 423bb1bfcaebb5d72855a3ec59ff4c1a
+guid: 8991b4df765019537a27f4d0a3651853
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 954201540912243018
-    second: Outline_0
+      213: -4462409714980077384
+    second: Boss Health Outline_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,12 +100,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Outline_0
+      name: Boss Health Outline_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 212
+        width: 44
         height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a416432fe310e3d00800000000000000
-      internalID: 954201540912243018
+      spriteID: 8b04c50d1065212c0800000000000000
+      internalID: -4462409714980077384
       vertices: []
       indices: 
       edges: []
