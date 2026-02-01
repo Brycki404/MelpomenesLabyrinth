@@ -16,9 +16,14 @@ public class AudioManager : MonoBehaviour
     public AudioClip bossLaugh; 
 
     [Header("-------- Player Audio Clip --------")]
-    public AudioClip lowHealth; 
-    public AudioClip death;
-    public AudioClip dodge;
+    public AudioClip playerLowHealth; 
+    public AudioClip playerDeath;
+    public AudioClip playerDodge;
+    public AudioClip playerAttack;
+    public AudioClip playerHit;
+
+    [Header("-------- User Interface --------")]
+    public AudioClip button;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -40,7 +45,10 @@ public class AudioManager : MonoBehaviour
     public void PlayBossText() => PlaySFX(bossText); 
     public void PlayBossDeath() => PlaySFX(bossDeath); 
     public void PlayBossLaugh() => PlaySFX(bossLaugh); 
-    public void PlayLowHealth() => PlaySFX(lowHealth); 
-    public void PlayDeath() => PlaySFX(death);
-    public void PlayDodge() => PlaySFX(dodge);
+    public void PlayLowHealth() => PlaySFX(playerLowHealth); 
+    public void PlayDeath() => PlaySFX(playerDeath);
+    public void PlayDodge() => PlaySFX(playerDodge);
+    public void PlayAttack() => PlaySFX(playerAttack);
+    public void PlayHit() => PlaySFX(playerHit);
+    public void PlayButton() => PlaySFX(button);
 }
