@@ -2,25 +2,28 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
+public enum BulletFaction
+{
+    Player,
+    Enemy,
+    Neutral
+}
+
 public class Bullet : MonoBehaviour
 {
     private Vector2 direction;
     private float speed;
     private BulletSpawner spawner;
-    private Material mat;
-    private void Awake()
-    {
-        var preset = GetComponent<MaterialPresetApplier>();
-        if (preset != null)
-            mat = preset.Mat;
-    }
+
+    public BulletFaction Faction { get; private set; }
 
     private readonly List<IBulletBehavior> behaviors = new List<IBulletBehavior>();
 
     public void SetSpawner(BulletSpawner s) => spawner = s;
 
-    public void Initialize(Vector2 dir, float spd, List<IBulletBehavior> newBehaviors = null)
+    public void Initialize(Vector2 dir, float spd, BulletFaction faction, List<IBulletBehavior> newBehaviors = null)
     {
+        Faction = faction;
         direction = dir.normalized;
         speed = spd;
 

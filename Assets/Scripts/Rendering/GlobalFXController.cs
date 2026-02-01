@@ -1,49 +1,19 @@
 using UnityEngine;
-using System.Collections.Generic;
+using System;
 
 public class GlobalFXController : MonoBehaviour
 {
-    public static GlobalFXController Instance { get; private set; }
+    public static GlobalFXController Instance;
 
-    private readonly List<IGlobalFlashListener> flashListeners = new();
-    private CameraShake camShake;
+    public event Action<float> OnGlobalFlash;
 
-    private void Awake()
+    void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
         Instance = this;
-        camShake = FindAnyObjectByType<CameraShake>();
     }
 
-    public void RegisterFlashListener(IGlobalFlashListener l)
+    public void TriggerGlobalFlash(float strength)
     {
-        if (!flashListeners.Contains(l))
-            flashListeners.Add(l);
+        OnGlobalFlash?.Invoke(strength);
     }
-
-    public void UnregisterFlashListener(IGlobalFlashListener l)
-    {
-        flashListeners.Remove(l);
-    }
-
-    public void GlobalHitFlash(float amount, Color color)
-    {
-        foreach (var l in flashListeners)
-            l.OnGlobalFlash(amount, color);
-    }
-
-    public void GlobalCameraShake()
-    {
-        if (camShake != null)
-            camShake.Shake();
-    }
-}
-
-public interface IGlobalFlashListener
-{
-    void OnGlobalFlash(float amount, Color color);
 }

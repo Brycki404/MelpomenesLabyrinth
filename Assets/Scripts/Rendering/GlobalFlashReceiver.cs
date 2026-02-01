@@ -1,30 +1,18 @@
 using UnityEngine;
 
-[RequireComponent(typeof(MaterialPresetApplier))]
-public class GlobalFlashReceiver : MonoBehaviour, IGlobalFlashListener
+[RequireComponent(typeof(MaterialFX))]
+public class GlobalFlashReceiver : MonoBehaviour
 {
-    private Material mat;
+    MaterialFX mat;
 
-    private void Awake()
+    void Awake()
     {
-        mat = GetComponent<MaterialPresetApplier>().Mat;
+        mat = GetComponent<MaterialFX>();
+        GlobalFXController.Instance.OnGlobalFlash += HandleFlash;
     }
 
-    private void OnEnable()
+    void HandleFlash(float strength)
     {
-        if (GlobalFXController.Instance != null)
-            GlobalFXController.Instance.RegisterFlashListener(this);
-    }
-
-    private void OnDisable()
-    {
-        if (GlobalFXController.Instance != null)
-            GlobalFXController.Instance.UnregisterFlashListener(this);
-    }
-
-    public void OnGlobalFlash(float amount, Color color)
-    {
-        mat.SetColor("_FlashColor", color);
-        mat.SetFloat("_FlashAmount", amount);
+        mat.SetFlash(strength);
     }
 }

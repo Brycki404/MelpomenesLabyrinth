@@ -7,9 +7,10 @@ public static class BulletFactory
         Vector2 position,
         Vector2 direction,
         float speed,
+        BulletFaction faction = BulletFaction.Enemy,
         BehaviorPreset preset = null)
     {
-        Bullet b = spawner.SpawnBullet(position, direction, speed);
+        Bullet b = spawner.SpawnBullet(position, direction, speed, faction);
 
         if (preset != null)
         {

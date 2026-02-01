@@ -84,4 +84,16 @@ public static class PatternMath
         float rad = angleDeg * Mathf.Deg2Rad;
         return new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
     }
+
+    public static float DirectionToAngle(Vector2 dir)
+    {
+        // atan2 returns radians, convert to degrees
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        // Normalize to 0–360 (optional but recommended)
+        if (angle < 0f)
+            angle += 360f;
+
+        return angle;
+    }
 }

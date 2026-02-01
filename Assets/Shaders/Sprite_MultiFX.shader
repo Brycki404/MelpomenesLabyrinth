@@ -2,7 +2,7 @@ Shader "Custom/Sprite_MultiFX"
 {
     Properties
     {
-        _MainTex ("Sprite Texture", 2D) = "white" {}
+        [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
 
         _FlashColor ("Flash Color", Color) = (1,0,0,1)
@@ -94,41 +94,69 @@ Shader "Custom/Sprite_MultiFX"
 
             float4 frag (Varyings IN) : SV_Target
             {
+                _FlashColor.a = 0;
+                _DissolveEdgeColor.a = 0;
+                _OutlineColor.a = 0;
+
                 float2 uv = IN.uv;
 
-                // Base sprite
+                // --- SAMPLE SPRITE FIRST ---
                 float4 baseTex = SampleSprite(uv);
+                float  spriteAlpha = baseTex.a;
                 float4 col = baseTex * IN.color;
 
-                // Outline (simple 4‑tap)
-                float2 texel = float2(ddx(uv.x), ddy(uv.y)) * _OutlineThickness;
-                float a0 = SampleSprite(uv + float2(texel.x, 0)).a;
-                float a1 = SampleSprite(uv + float2(-texel.x, 0)).a;
-                float a2 = SampleSprite(uv + float2(0, texel.y)).a;
-                float a3 = SampleSprite(uv + float2(0, -texel.y)).a;
-                float outlineMask = step(0.01, a0 + a1 + a2 + a3) * (1 - step(0.01, baseTex.a));
+                // --- DISSOLVE ---
+                float noise = SAMPLE_TEXTURE2D(_DissolveTex, sampler_DissolveTex, uv).r;
+
+                // 0 = visible, 1 = dissolved, masked by sprite alpha
+                float dissolveMask = step(_DissolveAmount, noise);
+                float alphaMaskedDissolve = dissolveMask * spriteAlpha;
+
+                // Fully visible
+                if (_DissolveAmount <= 0.001)
+                {
+                    // no dissolve
+                }
+                // Fully dissolved
+                else if (_DissolveAmount >= 0.999)
+                {
+                    // Fade to a solid color instead of transparency
+                    col.rgb = _DissolveEdgeColor.rgb;   // or any color you want
+                    col.a = 1;                          // stay opaque
+                    return col;
+                }
+                else
+                {
+                    // Only pixels that are both inside sprite AND past dissolve threshold survive
+                    clip(alphaMaskedDissolve - 0.01);
+
+                    float edgeStart = _DissolveAmount - _DissolveEdgeWidth;
+                    float edgeEnd   = _DissolveAmount;
+                    float edgeMask = smoothstep(edgeStart, edgeEnd, noise) * (1 - dissolveMask);
+
+                    col.rgb = lerp(col.rgb, _DissolveEdgeColor.rgb, edgeMask);
+                    col.a   = alphaMaskedDissolve;
+                }
+
+                // --- OUTLINE ---
+                float outlineMask = 0;
+                if (_OutlineThickness > 0.001)
+                {
+                    float2 texel = float2(ddx(uv.x), ddy(uv.y)) * _OutlineThickness;
+                    float a0 = SampleSprite(uv + float2(texel.x, 0)).a;
+                    float a1 = SampleSprite(uv + float2(-texel.x, 0)).a;
+                    float a2 = SampleSprite(uv + float2(0, texel.y)).a;
+                    float a3 = SampleSprite(uv + float2(0, -texel.y)).a;
+                    outlineMask = step(0.01, a0 + a1 + a2 + a3) * (1 - step(0.01, baseTex.a));
+                }
                 float4 outlineCol = _OutlineColor * outlineMask;
 
-                // Dissolve
-                float noise = SAMPLE_TEXTURE2D(_DissolveTex, sampler_DissolveTex, uv).r;
-                float edgeStart = _DissolveAmount - _DissolveEdgeWidth;
-                float edgeEnd   = _DissolveAmount;
-                float dissolveMask = step(noise, _DissolveAmount);
-                float edgeMask = smoothstep(edgeStart, edgeEnd, noise) * (1 - dissolveMask);
-
-                // Clip fully dissolved pixels
-                clip(dissolveMask - 0.01);
-
-                // Apply edge color
-                col.rgb = lerp(col.rgb, _DissolveEdgeColor.rgb, edgeMask);
-                col.a *= dissolveMask;
-
-                // Pulse (time‑based flash boost)
+                // --- FLASH / PULSE ---
                 float pulse = (sin(_Time.y * _PulseSpeed) * 0.5 + 0.5) * _PulseStrength;
                 float flashTotal = saturate(_FlashAmount + pulse);
                 col = lerp(col, _FlashColor, flashTotal);
 
-                // Combine outline behind sprite
+                // --- COMBINE OUTLINE ---
                 float outAlpha = saturate(col.a + outlineCol.a);
                 float3 outRGB = lerp(outlineCol.rgb, col.rgb, col.a / max(outAlpha, 1e-4));
 

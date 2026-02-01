@@ -7,6 +7,13 @@ public class BulletDeathAnimation : MonoBehaviour
 
     private float t;
 
+    private MaterialFX mat;
+
+    private void Awake()
+    {
+        mat = GetComponent<MaterialFX>();
+    }
+
     private void OnEnable()
     {
         t = 0f;
@@ -17,8 +24,14 @@ public class BulletDeathAnimation : MonoBehaviour
         t += Time.deltaTime;
         float s = ScaleCurve.Evaluate(t / Duration);
         transform.localScale = Vector3.one * s;
+        mat.SetDissolve(s);
 
         if (t >= Duration)
             gameObject.SetActive(false);
+    }
+
+    public void Enable()
+    {
+        OnEnable();
     }
 }

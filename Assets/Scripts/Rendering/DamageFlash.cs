@@ -1,30 +1,34 @@
 using UnityEngine;
+
+[RequireComponent(typeof(MaterialFX))]
 public class DamageFlash : MonoBehaviour
 {
-    public float Duration = 0.15f;
-    private float t;
-    private Material mat;
+    public float flashDuration = 0.1f;
 
-    private void Awake()
+    MaterialFX mat;
+    float timer;
+
+    void Awake()
     {
-        mat = GetComponent<MaterialOverride>().Mat;
+        mat = GetComponent<MaterialFX>();
     }
 
-    public void Flash()
+    public void TriggerFlash()
     {
-        t = Duration;
+        timer = flashDuration;
     }
 
-    private void Update()
+    void Update()
     {
-        if (t > 0)
+        if (timer > 0f)
         {
-            t -= Time.deltaTime;
-            mat.SetFloat("_FlashAmount", t / Duration);
+            timer -= Time.deltaTime;
+            float t = timer / flashDuration;
+            mat.SetFlash(t);
         }
         else
         {
-            mat.SetFloat("_FlashAmount", 0);
+            mat.SetFlash(0f);
         }
     }
 }

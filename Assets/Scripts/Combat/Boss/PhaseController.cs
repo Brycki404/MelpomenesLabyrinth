@@ -1,63 +1,48 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using UnityEngine.XR;
 
 public class PhaseController : MonoBehaviour
 {
-    [System.Serializable]
-    public class Phase
+    public BossRoot bossRoot;
+    public Phase[] phases;
+    public BossRoot boss;
+
+    int currentPhase;
+
+    void Start()
     {
-        public string Name;
-        public float HPThreshold;     // When HP drops BELOW this, phase activates
-        public List<AttackSO> Attacks;
+        currentPhase = 0;
+        ApplyPhase(phases[0]);
     }
 
-    public List<Phase> Phases;
-    public BossController Boss;
-    public float MaxHP = 100f;
-    public float CurrentHP;
-
-    private int currentPhaseIndex = -1;
-    private bool runningPhase = false;
-
-    private void Start()
+    void Update()
     {
-        CurrentHP = MaxHP;
-        StartCoroutine(PhaseWatcher());
-    }
+        float hpPercent = boss.TotalHPPercent;
 
-    public void Damage(float amount)
-    {
-        CurrentHP = Mathf.Max(0, CurrentHP - amount);
-    }
-
-    private IEnumerator PhaseWatcher()
-    {
-        while (CurrentHP > 0)
+        if (hpPercent <= phases[currentPhase + 1].hpThreshold)
         {
-            for (int i = 0; i < Phases.Count; i++)
-            {
-                if (CurrentHP <= Phases[i].HPThreshold && i != currentPhaseIndex)
-                {
-                    currentPhaseIndex = i;
-                    StartCoroutine(RunPhase(Phases[i]));
-                }
-            }
-
-            yield return null;
+            TryAdvancePhase();
         }
     }
 
-    private IEnumerator RunPhase(Phase phase)
+    public void TriggerEvent(string eventName)
     {
-        if (runningPhase)
-            yield break;
+        // Example: "LeftHandDead" → switch to next phase
+        TryAdvancePhase();
+    }
 
-        runningPhase = true;
+    void ApplyPhase(Phase p)
+    {
+        bossRoot.ApplyPhase(p);
+    }
 
-        foreach (var atk in phase.Attacks)
-            yield return StartCoroutine(atk.Run(Boss));
-
-        runningPhase = false;
+    void TryAdvancePhase()
+    {
+        if (currentPhase < phases.Length - 1)
+        {
+            currentPhase++;
+            ApplyPhase(phases[currentPhase]);
+        }
     }
 }
