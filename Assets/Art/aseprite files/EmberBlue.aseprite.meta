@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b489c80b5454dd340a6a510eb70e8573
+guid: 3698a27ae811ec0408acc62de2824f1a
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,9 +123,51 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: GenericBorder1
+  - name: Frame_0
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.54545456, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 48
+      y: 4
+      width: 11
+      height: 16
+    spriteID: 476b064dc85dc4244baa3786d6424916
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 48, y: 4}
+  - name: Frame_1
+    originalName: 
+    pivot: {x: 0.53846157, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 27
+      y: 4
+      width: 13
+      height: 16
+    spriteID: 1413814ccd4f5944e91aa10615f9a84f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 27, y: 4}
+  - name: Frame_2
+    originalName: 
+    pivot: {x: 0.53333336, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -134,8 +176,8 @@ ScriptedImporter:
       x: 4
       y: 4
       width: 15
-      height: 15
-    spriteID: 9c1a51991c305f843a908e4e5016fb90
+      height: 16
+    spriteID: 37d5d0afa31ecce4e9b804d656930335
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,24 +186,72 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
+  - name: Frame_3
+    originalName: 
+    pivot: {x: 0.54545456, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 28
+      width: 11
+      height: 16
+    spriteID: 9b38ea9132a887741ac84022071537f0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 28}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -312432308
-    name: GenericBorder1
+    guid: -1286969605
+    name: EmberBlue
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: GenericBorder1
+    - name: Frame_0
       frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 2
+        y: 0
+        width: 11
+        height: 16
+      spriteId: 476b064dc85dc4244baa3786d6424916
+    - name: Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 1
+        y: 0
+        width: 13
+        height: 16
+      spriteId: 1413814ccd4f5944e91aa10615f9a84f
+    - name: Frame_2
+      frameIndex: 2
       additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
         width: 15
-        height: 15
-      spriteId: 9c1a51991c305f843a908e4e5016fb90
+        height: 16
+      spriteId: 37d5d0afa31ecce4e9b804d656930335
+    - name: Frame_3
+      frameIndex: 3
+      additiveSortOrder: 0
+      cellRect:
+        x: 2
+        y: 0
+        width: 11
+        height: 16
+      spriteId: 9b38ea9132a887741ac84022071537f0
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -180,5 +270,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 15, y: 15}
-  previousTextureSize: {x: 32, y: 32}
+  canvasSize: {x: 16, y: 16}
+  previousTextureSize: {x: 64, y: 64}

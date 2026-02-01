@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b489c80b5454dd340a6a510eb70e8573
+guid: 84e39c489a26bf14e8f6aaf385953735
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,9 +123,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: GenericBorder1
+  - name: Health Segments
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.13333334}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -133,9 +133,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 15
+      width: 26
       height: 15
-    spriteID: 9c1a51991c305f843a908e4e5016fb90
+    spriteID: e9006e7deb4dc124cbc7382540257b91
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -147,21 +147,21 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -312432308
-    name: GenericBorder1
+    guid: 1100969234
+    name: Health Segments
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: GenericBorder1
+    - name: Health Segments
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 0
-        y: 0
-        width: 15
+        y: -2
+        width: 26
         height: 15
-      spriteId: 9c1a51991c305f843a908e4e5016fb90
+      spriteId: e9006e7deb4dc124cbc7382540257b91
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -180,5 +180,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 15, y: 15}
-  previousTextureSize: {x: 32, y: 32}
+  canvasSize: {x: 26, y: 10}
+  previousTextureSize: {x: 64, y: 32}

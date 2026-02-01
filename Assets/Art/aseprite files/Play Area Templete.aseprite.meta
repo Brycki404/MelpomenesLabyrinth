@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b489c80b5454dd340a6a510eb70e8573
+guid: 0fef58afcccf6364abf426de79cb62ae
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,9 +123,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: GenericBorder1
+  - name: Play Area Templete
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.109375, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -133,9 +133,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 15
-      height: 15
-    spriteID: 9c1a51991c305f843a908e4e5016fb90
+      width: 96
+      height: 96
+    spriteID: f192d4226b42b6c4ea73ed3d206a24eb
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -147,21 +147,21 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -312432308
-    name: GenericBorder1
+    guid: 1334602219
+    name: Play Area Templete
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: GenericBorder1
+    - name: Play Area Templete
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
-        width: 15
-        height: 15
-      spriteId: 9c1a51991c305f843a908e4e5016fb90
+        width: 96
+        height: 96
+      spriteId: f192d4226b42b6c4ea73ed3d206a24eb
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -180,5 +180,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 15, y: 15}
-  previousTextureSize: {x: 32, y: 32}
+  canvasSize: {x: 21, y: 21}
+  previousTextureSize: {x: 128, y: 128}
