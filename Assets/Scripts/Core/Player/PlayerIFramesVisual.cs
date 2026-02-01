@@ -1,17 +1,17 @@
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(MaterialPresetApplier))]
+[RequireComponent(typeof(MaterialFX))]
 public class PlayerIFramesVisual : MonoBehaviour
 {
     public float DefaultIFrameDuration = 1f;
     public Color DefaultIFrameColor = Color.white;
 
-    private Material mat;
+    private MaterialFX mat;
 
     private void Awake()
     {
-        mat = GetComponent<MaterialPresetApplier>().Mat;
+        mat = GetComponent<MaterialFX>();
     }
 
     public void PlayIFrames(float duration = -1f, Color? color = null)
@@ -26,15 +26,16 @@ public class PlayerIFramesVisual : MonoBehaviour
 
     private IEnumerator IFrameRoutine(float IFrameDuration, Color IFrameColor)
     {
-        mat.SetColor("_FlashColor", IFrameColor);
+        
+        mat.SetFlashColor(IFrameColor);
         float t = 0f;
         while (t < IFrameDuration)
         {
             t += Time.deltaTime;
             float a = Mathf.PingPong(t * 8f, 1f);
-            mat.SetFloat("_FlashAmount", a);
+            mat.SetFlash(a);
             yield return null;
         }
-        mat.SetFloat("_FlashAmount", 0f);
+        mat.SetFlash(0f);
     }
 }

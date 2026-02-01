@@ -53,49 +53,49 @@ public class BulletSpawner : MonoBehaviour
 
     // ---------- Low-level spawn ----------
 
-    public Bullet SpawnBullet(Vector2 position, Vector2 direction, float speed)
+    public Bullet SpawnBullet(Vector2 position, Vector2 direction, float speed, BulletFaction faction = BulletFaction.Enemy)
     {
         Bullet b = GetBullet();
         b.transform.position = position;
-        b.Initialize(direction, speed);
+        b.Initialize(direction, speed, faction);
         return b;
     }
 
     // ---------- Pattern helpers ----------
 
-    public void SpawnCircle(Vector2 center, int count, float speed)
+    public void SpawnCircle(Vector2 center, int count, float speed, BulletFaction faction = BulletFaction.Enemy)
     {
         var dirs = PatternMath.CircleDirections(count);
 
         foreach (var dir in dirs)
-            SpawnBullet(center, dir, speed);
+            SpawnBullet(center, dir, speed, faction);
     }
 
-    public void SpawnArc(Vector2 center, int count, float startAngle, float endAngle, float speed)
+    public void SpawnArc(Vector2 center, int count, float startAngle, float endAngle, float speed, BulletFaction faction = BulletFaction.Enemy)
     {
         var dirs = PatternMath.ArcDirections(count, startAngle, endAngle);
 
         foreach (var dir in dirs)
-            SpawnBullet(center, dir, speed);
+            SpawnBullet(center, dir, speed, faction);
     }
 
-    public void SpawnSpiral(Vector2 center, int count, float startAngle, float angleStep, float speed)
+    public void SpawnSpiral(Vector2 center, int count, float startAngle, float angleStep, float speed, BulletFaction faction = BulletFaction.Enemy)
     {
         var dirs = PatternMath.SpiralDirections(count, startAngle, angleStep);
 
         foreach (var dir in dirs)
-            SpawnBullet(center, dir, speed);
+            SpawnBullet(center, dir, speed, faction);
     }
 
-    public void SpawnWave(Vector2 center, int count, float centerAngle, float spread, float speed)
+    public void SpawnWave(Vector2 center, int count, float centerAngle, float spread, float speed, BulletFaction faction = BulletFaction.Enemy)
     {
         var dirs = PatternMath.WaveDirections(count, centerAngle, spread);
 
         foreach (var dir in dirs)
-            SpawnBullet(center, dir, speed);
+            SpawnBullet(center, dir, speed, faction);
     }
 
-    public void SpawnRing(Vector2 center, int count, float radius, float speed)
+    public void SpawnRing(Vector2 center, int count, float radius, float speed, BulletFaction faction = BulletFaction.Enemy)
     {
         var offsets = PatternMath.RingOffsets(count, radius);
 
@@ -103,12 +103,20 @@ public class BulletSpawner : MonoBehaviour
         {
             Vector2 pos = center + offset;
             Vector2 dir = offset.normalized;
-            SpawnBullet(pos, dir, speed);
+            SpawnBullet(pos, dir, speed, faction);
         }
     }
 
     public void PlayDeathAnimation(Vector2 pos)
     {
-        var anim = Instantiate(DeathPrefab, pos, Quaternion.identity);
+        var bulletDeathAnimation = GetComponent<BulletDeathAnimation>();
+        if (bulletDeathAnimation != null)
+        {
+            bulletDeathAnimation.Enable();
+        }
+        else if (DeathPrefab)
+        {
+            var anim = Instantiate(DeathPrefab, pos, Quaternion.identity);
+        }
     }
 }

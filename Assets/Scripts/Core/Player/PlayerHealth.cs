@@ -69,7 +69,9 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Bullet"))
-            Damage(1, other.gameObject);
+        var GO = other.gameObject;
+        var bullet = GO.GetComponent<Bullet>();
+        if ((bullet != null && (bullet.Faction == BulletFaction.Enemy || bullet.Faction == BulletFaction.Neutral)) || other.CompareTag("BossAttack"))
+            Damage(1, GO);
     }
 }

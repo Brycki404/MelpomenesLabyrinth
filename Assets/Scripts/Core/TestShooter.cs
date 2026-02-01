@@ -59,7 +59,7 @@ public class TestShooter : MonoBehaviour
         var dirs = PatternMath.CircleDirections(Count);
 
         foreach (var dir in dirs)
-            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, Preset);
+            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, BulletFaction.Enemy, Preset);
     }
 
     private void FireArc(Vector2 pos)
@@ -67,7 +67,7 @@ public class TestShooter : MonoBehaviour
         var dirs = PatternMath.ArcDirections(Count, -60f, 60f);
 
         foreach (var dir in dirs)
-            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, Preset);
+            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, BulletFaction.Enemy, Preset);
     }
 
     private void FireSpiral(Vector2 pos)
@@ -76,7 +76,7 @@ public class TestShooter : MonoBehaviour
         spiralAngle += 10f;
 
         foreach (var dir in dirs)
-            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, Preset);
+            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, BulletFaction.Enemy, Preset);
     }
 
     private void FireWave(Vector2 pos)
@@ -84,7 +84,7 @@ public class TestShooter : MonoBehaviour
         var dirs = PatternMath.WaveDirections(Count, 90f, 45f);
 
         foreach (var dir in dirs)
-            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, Preset);
+            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, BulletFaction.Enemy, Preset);
     }
 
     private void FireRing(Vector2 pos)
@@ -96,7 +96,7 @@ public class TestShooter : MonoBehaviour
             Vector2 spawnPos = pos + offset;
             Vector2 dir = offset.normalized;
 
-            BulletFactory.SpawnBullet(Spawner, spawnPos, dir, Speed, Preset);
+            BulletFactory.SpawnBullet(Spawner, spawnPos, dir, Speed, BulletFaction.Enemy, Preset);
         }
     }
 }
