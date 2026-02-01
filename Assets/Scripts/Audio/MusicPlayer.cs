@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour
 {
@@ -19,14 +20,16 @@ public class MusicPlayer : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
 
         source = gameObject.AddComponent<AudioSource>();
         source.loop = true;
         source.playOnAwake = false;
         source.volume = 1f;
+    
+        Scene currentScene = SceneManager.GetActiveScene();
 
-        PlayTitleMusic();
+        if (currentScene.name == "TitleScene")
+            PlayTitleMusic();
     }
 
     public void PlayTitleMusic()

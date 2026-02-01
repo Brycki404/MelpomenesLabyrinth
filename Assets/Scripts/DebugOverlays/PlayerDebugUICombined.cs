@@ -83,7 +83,6 @@ public class PlayerDebugUICombined : MonoBehaviour
             BuildUI();
             ValidateUI();
             uiReady = true;
-            Debug.Log("[PlayerDebugUI] UI built and validated.");
         }
         catch (System.SystemException e)
         {
@@ -123,14 +122,11 @@ public class PlayerDebugUICombined : MonoBehaviour
     // ---------------- BUILD ----------------
 
     void BuildUI()
-    {
-        Debug.Log("BuildUI() START");
-        
+    {   
         // Canvas
         GameObject canvasGO = new GameObject("DebugCanvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
         canvas = canvasGO.GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        Debug.Log("Canvas created");
 
         CanvasScaler scaler = canvasGO.GetComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
@@ -143,7 +139,6 @@ public class PlayerDebugUICombined : MonoBehaviour
             GameObject esGO = new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
             eventSystem = esGO.GetComponent<EventSystem>();
         }
-        Debug.Log("EventSystem created");
 
         // Window
         GameObject windowGO = new GameObject("DebugWindow");
@@ -153,7 +148,6 @@ public class PlayerDebugUICombined : MonoBehaviour
 
         // Now parent it
         windowGO.transform.SetParent(canvasGO.transform, false);
-        Debug.Log("Window GO created");
 
         windowRect = windowGO.GetComponent<RectTransform>();
         windowRect.sizeDelta = new Vector2(420, 600);
@@ -161,16 +155,12 @@ public class PlayerDebugUICombined : MonoBehaviour
         windowRect.anchorMax = new Vector2(0, 1);
         windowRect.pivot = new Vector2(0, 1);
         windowRect.anchoredPosition = new Vector2(20, -20);
-        Debug.Log("Window RectTransform added");
 
         Image winBG = windowGO.AddComponent<Image>();
         winBG.color = new Color(0, 0, 0, 0.7f);
         winBG.raycastTarget = true;
-        Debug.Log("Window Image added");
 
-        Debug.Log("Adding draggable...");
         windowGO.AddComponent<DebugWindowDraggable>();
-        Debug.Log("Added draggable...");
 
         // Title + FPS
         titleLabel = CreateLabel("Title", windowGO.transform, "Player Debug", 18, FontStyles.Bold, new Vector2(10, -20));
@@ -486,9 +476,6 @@ public class PlayerDebugUICombined : MonoBehaviour
         // Set visuals
         entry.GetComponentInChildren<TextMeshProUGUI>().text = name;
         entry.GetComponent<Image>().color = active ? Color.green : Color.gray;
-
-        if (entry.transform.parent.name != "StateList")
-            Debug.Log("Parent of state entry: " + entry.transform.parent);
     }
 
     void UpdatePreview()
