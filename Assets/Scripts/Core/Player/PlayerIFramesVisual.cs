@@ -4,8 +4,8 @@ using System.Collections;
 [RequireComponent(typeof(MaterialPresetApplier))]
 public class PlayerIFramesVisual : MonoBehaviour
 {
-    public float IFrameDuration = 1f;
-    public Color IFrameColor = Color.white;
+    public float DefaultIFrameDuration = 1f;
+    public Color DefaultIFrameColor = Color.white;
 
     private Material mat;
 
@@ -14,13 +14,17 @@ public class PlayerIFramesVisual : MonoBehaviour
         mat = GetComponent<MaterialPresetApplier>().Mat;
     }
 
-    public void PlayIFrames()
+    public void PlayIFrames(float duration = -1f, Color? color = null)
     {
+        // Use defaults if caller didn't specify values
+        float finalDuration = duration > 0f ? duration : DefaultIFrameDuration;
+        Color finalColor = color ?? DefaultIFrameColor;
+
         StopAllCoroutines();
-        StartCoroutine(IFrameRoutine());
+        StartCoroutine(IFrameRoutine(finalDuration, finalColor));
     }
 
-    private IEnumerator IFrameRoutine()
+    private IEnumerator IFrameRoutine(float IFrameDuration, Color IFrameColor)
     {
         mat.SetColor("_FlashColor", IFrameColor);
         float t = 0f;
