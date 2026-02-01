@@ -8,6 +8,7 @@ public class MusicPlayer : MonoBehaviour
     [Header("Tracks")]
     public AudioClip titleMusic;
     public AudioClip pauseMusic;
+    public AudioClip combatMusic;
 
     private AudioSource source;
 
@@ -30,6 +31,8 @@ public class MusicPlayer : MonoBehaviour
 
         if (currentScene.name == "TitleScene")
             PlayTitleMusic();
+        else if (currentScene.name == "GameScene")
+            PlayCombatMusic();
     }
 
     public void PlayTitleMusic()
@@ -42,6 +45,22 @@ public class MusicPlayer : MonoBehaviour
     public void StopTitleMusic()
     {
         if (source.clip == titleMusic)
+        {
+            source.Stop();
+            source.clip = null;   
+        }
+    }
+
+    public void PlayCombatMusic()
+    {
+        if (source.clip == combatMusic) return;
+        source.clip = combatMusic;
+        source.Play();
+    }
+
+    public void StopCombatMusic()
+    {
+        if (source.clip == combatMusic)
         {
             source.Stop();
             source.clip = null;   
