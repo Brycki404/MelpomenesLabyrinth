@@ -37,11 +37,23 @@ public class PlayerAnimationController : MonoBehaviour
             facing = moveInput.normalized;
 
         AnimationState next = DecideState();
+
         if (next != current)
         {
             current = next;
             fsm.Play(current);
             eventRunner.SetState(current, OnAnimationEvent);
+        }
+
+        if (current.stateName.Contains("Walk"))
+        {
+            // Update runtime modifier (Shift key)
+            float modifier = Input.GetKey(KeyCode.LeftShift) ? 0.5f : 1f;
+            fsm.UpdateSpeedModifier(modifier);
+        }
+        else
+        {
+            fsm.UpdateSpeedModifier(1f);
         }
 
         eventRunner.Update(player.NormalizedTime);
