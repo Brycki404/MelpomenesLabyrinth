@@ -41,6 +41,31 @@ public class Bullet : MonoBehaviour
 
     public List<IBulletBehavior> GetBehaviors() => behaviors;
 
+    public bool HasBehavior<T>() where T : IBulletBehavior
+    {
+        return behaviors.Any(b => b is T);
+    }
+
+    public bool HasBehavior(string behaviorName)
+    {
+        return behaviors.Any(b => b.GetType().Name == behaviorName);
+    }
+
+    public void RemoveBehavior<T>() where T : IBulletBehavior
+    {
+        behaviors.RemoveAll(b => b is T);
+    }
+
+    public void RemoveBehavior(string behaviorName)
+    {
+        behaviors.RemoveAll(b => b.GetType().Name == behaviorName);
+    }
+
+    public T GetBehavior<T>() where T : class, IBulletBehavior
+    {
+        return behaviors.FirstOrDefault(b => b is T) as T;
+    }
+
     public void AddBehavior(IBulletBehavior b) => behaviors.Add(b);
 
     public Vector2 GetDirection() => direction;

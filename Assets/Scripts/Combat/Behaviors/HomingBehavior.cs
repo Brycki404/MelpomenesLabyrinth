@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class HomingBehavior : IBulletBehavior
 {
-    private Transform target;
-    private float turnSpeed;
+    public Transform target;
+    public float turnSpeed;
 
     public HomingBehavior(Transform target, float turnSpeed)
     {

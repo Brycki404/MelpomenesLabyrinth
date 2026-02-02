@@ -3,28 +3,28 @@ using UnityEngine;
 public class DashMovement : MonoBehaviour
 {
     [Header("Dash Settings")]
-    public float dashDuration = 0.25f;
-    public AnimationCurve dashSpeedCurve; // 0–1 normalized time
+    public float dashDuration = 0.2f;
+    public AnimationCurve dashSpeedCurve;
     public float baseDashSpeed = 20f;
-
-    [Header("Cancel Rules")]
-    public bool allowDashCancel = false; // can dash cancel into another dash?
-    public bool allowAttackCancel = false;
+    public float dashCooldown = 2.25f;
 
     [Header("Buffering")]
     public float dashBufferTime = 0.12f;
 
     [Header("Invulnerability")]
     public bool useIFrames = true;
-    public float iframeStart = 0.05f;
-    public float iframeEnd = 0.20f;
+    public float iframeStart = 0.0f;
+    public float iframeEnd = 0.75f;
 
     private Rigidbody2D rb;
     private PlayerController controller;
     private PlayerAnimationController anim;
+    private GhostTrail gt;
+    private PlayerHealth health;
 
-    private float dashTimer;
-    private float dashBufferTimer;
+    private float dashTimer = 0f;
+    private float cooldownTimer = 0f;
+    private float dashBufferTimer = 0f;
     private Vector2 dashDir;
 
     public bool IsDashing => dashTimer > 0f;
@@ -34,28 +34,35 @@ public class DashMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         controller = GetComponent<PlayerController>();
+        health = GetComponent<PlayerHealth>();
         anim = GetComponentInChildren<PlayerAnimationController>();
+        gt = GetComponent<GhostTrail>();
     }
 
     public void TryStartDash()
     {
-        dashBufferTimer = dashBufferTime;
+        if (health.CurrentHP > 0)
+            dashBufferTimer = dashBufferTime;
     }
 
     public void TickDash()
     {
+        // COOLDOWN COUNTDOWN
+        if (cooldownTimer > 0f)
+            cooldownTimer -= Time.deltaTime;
+
         // BUFFER COUNTDOWN
-        if (dashBufferTimer > 0)
+        if (dashBufferTimer > 0f)
             dashBufferTimer -= Time.deltaTime;
 
-        // START DASH
-        if (!IsDashing && dashBufferTimer > 0)
+        // START DASH (buffer + cooldown + cancel rules)
+        if (!IsDashing && dashBufferTimer > 0f)
         {
-            if (!allowDashCancel)
-                return;
-
-            StartDash();
-            dashBufferTimer = 0;
+            if (cooldownTimer <= 0f)
+            {
+                StartDash();
+                dashBufferTimer = 0f;
+            }
         }
 
         // UPDATE DASH
@@ -73,26 +80,38 @@ public class DashMovement : MonoBehaviour
                 IsInvulnerable = t >= iframeStart && t <= iframeEnd;
 
             // END DASH
-            if (dashTimer <= 0)
+            if (dashTimer <= 0f)
             {
-                IsInvulnerable = false;
+                EndDash();
             }
         }
     }
 
     private void StartDash()
     {
+        // Reset cooldown
+        cooldownTimer = dashCooldown;
+
+        // Determine dash direction
         Vector2 move = controller.GetMoveInput();
         if (move.sqrMagnitude < 0.01f)
             move = anim.GetFacingDir();
 
         dashDir = move.normalized;
         dashTimer = dashDuration;
+
+        // Start ghost trail
+        gt.StartGhostTrail(dashDuration);
+
+        // Reset i-frames
+        IsInvulnerable = false;
     }
 
     public void EndDash()
     {
         dashTimer = 0f;
         IsInvulnerable = false;
+        rb.linearVelocity = Vector2.zero;
+        gt.StopGhostTrail();
     }
 }

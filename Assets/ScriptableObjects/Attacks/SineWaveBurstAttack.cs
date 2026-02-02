@@ -44,9 +44,7 @@ public class SineWaveBurstAttack : Attack
                 new SineWaveBehavior(dir, frequency, amplitude)
             };
 
-            BulletFactory
-                .SpawnBullet(spawner, center, dir, bulletSpeed, preset: null)
-                .SetBehaviors(behaviors);
+            BulletFactory.SpawnBullet(spawner, center, dir, bulletSpeed, BulletFaction.Enemy, behaviors);
         }
     }
 }

@@ -3,7 +3,6 @@ using UnityEngine;
 public class TestShooter : MonoBehaviour
 {
     public BulletSpawner Spawner;
-    public BehaviorPreset Preset;
 
     [Header("Pattern Settings")]
     public PatternType Pattern = PatternType.Circle;
@@ -59,7 +58,7 @@ public class TestShooter : MonoBehaviour
         var dirs = PatternMath.CircleDirections(Count);
 
         foreach (var dir in dirs)
-            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, BulletFaction.Enemy, Preset);
+            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, BulletFaction.Enemy);
     }
 
     private void FireArc(Vector2 pos)
@@ -67,7 +66,7 @@ public class TestShooter : MonoBehaviour
         var dirs = PatternMath.ArcDirections(Count, -60f, 60f);
 
         foreach (var dir in dirs)
-            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, BulletFaction.Enemy, Preset);
+            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, BulletFaction.Enemy);
     }
 
     private void FireSpiral(Vector2 pos)
@@ -76,7 +75,7 @@ public class TestShooter : MonoBehaviour
         spiralAngle += 10f;
 
         foreach (var dir in dirs)
-            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, BulletFaction.Enemy, Preset);
+            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, BulletFaction.Enemy);
     }
 
     private void FireWave(Vector2 pos)
@@ -84,7 +83,7 @@ public class TestShooter : MonoBehaviour
         var dirs = PatternMath.WaveDirections(Count, 90f, 45f);
 
         foreach (var dir in dirs)
-            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, BulletFaction.Enemy, Preset);
+            BulletFactory.SpawnBullet(Spawner, pos, dir, Speed, BulletFaction.Enemy);
     }
 
     private void FireRing(Vector2 pos)
@@ -96,7 +95,7 @@ public class TestShooter : MonoBehaviour
             Vector2 spawnPos = pos + offset;
             Vector2 dir = offset.normalized;
 
-            BulletFactory.SpawnBullet(Spawner, spawnPos, dir, Speed, BulletFaction.Enemy, Preset);
+            BulletFactory.SpawnBullet(Spawner, spawnPos, dir, Speed, BulletFaction.Enemy);
         }
     }
 }

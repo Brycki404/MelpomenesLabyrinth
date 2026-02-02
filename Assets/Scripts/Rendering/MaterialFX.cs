@@ -50,8 +50,14 @@ public class MaterialFX : MonoBehaviour
     // Override Methods (formerly MaterialOverride)
     // -----------------------------
 
+    public void SetTint(Color newColor)
+    {
+        runtimeMaterial.SetColor("_Color", newColor);
+    }
+
     public void SetFlashColor(Color newColor)
     {
+        newColor.a = 0;
         runtimeMaterial.SetColor("_FlashColor", newColor);
     }
 
@@ -65,9 +71,20 @@ public class MaterialFX : MonoBehaviour
         runtimeMaterial.SetFloat("_DissolveAmount", amount);
     }
 
+    public void SetDissolveEdgeColor(Color newColor)
+    {
+        newColor.a = 0;
+        runtimeMaterial.SetColor("_DissolveEdgeColor", newColor);
+    }
+
     public void SetDissolveEdgeWidth(float width)
     {
         runtimeMaterial.SetFloat("_DissolveEdgeWidth", width);
+    }
+
+    public void SetPulseSpeed(float speed)
+    {
+        runtimeMaterial.SetFloat("_PulseSpeed", speed);
     }
 
     public void SetPulseStrength(float strength)
@@ -78,5 +95,11 @@ public class MaterialFX : MonoBehaviour
     public void SetOutline(float thickness)
     {
         runtimeMaterial.SetFloat("_OutlineThickness", thickness);
+    }
+
+    public void SetOutlineColor(Color newColor)
+    {
+        newColor.a = 0;
+        runtimeMaterial.SetColor("_OutlineColor", newColor);
     }
 }

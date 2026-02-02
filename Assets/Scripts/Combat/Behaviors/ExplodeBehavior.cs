@@ -22,7 +22,7 @@ public class ExplodeBehavior : IBulletBehavior
 
         if (t >= lifetime)
         {
-            spawner.SpawnCircle(bullet.transform.position, count, speed);
+            BulletFactory.SpawnCircle(spawner, bullet.transform.position, count, speed, bullet.Faction, null);
             bullet.gameObject.SetActive(false);
         }
     }

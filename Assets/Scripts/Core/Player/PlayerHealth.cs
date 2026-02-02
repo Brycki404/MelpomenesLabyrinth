@@ -10,10 +10,14 @@ public class PlayerHealth : MonoBehaviour
 
     private bool localIFramesActive = false;
     private DashMovement dash;
+    private DamageFlash damageFlash;
+    private MaterialFX mat;
 
     private void Awake()
     {
         dash = GetComponent<DashMovement>();
+        damageFlash = GetComponentInChildren<DamageFlash>();
+        mat = GetComponentInChildren<MaterialFX>();
     }
 
     private void Start()
@@ -39,12 +43,14 @@ public class PlayerHealth : MonoBehaviour
 
     public void Damage(int amount, GameObject hit)
     {
+        if (CurrentHP <= 0) return;
         if (IsInvulnerable) return;
 
         if (hit)
             hit.gameObject.SetActive(false);
 
         CurrentHP -= amount;
+        
         if (CurrentHP <= 0)
         {
             CurrentHP = 0;
@@ -52,6 +58,7 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
 
+        damageFlash.TriggerFlash();
         StartCoroutine(InvulnRoutine());
     }
 
@@ -64,8 +71,36 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
+        StartCoroutine(DissolveOut());
+    }
+
+    IEnumerator DissolveOut()
+    {
+        float dur = 3f;
+        float t = 0f;
+
+        while (t < dur)
+        {
+            t += Time.deltaTime;
+            float p = t / dur; // 0 → 1
+
+            // Apply easing
+            float eased = EasingLibrary.EaseOutQuad(p);
+
+            // Dissolve goes from 1 → 0
+            float dissolveValue = Mathf.Lerp(1f, 0f, eased);
+
+            mat.SetDissolve(dissolveValue);
+
+            yield return null;
+        }
+        
+        // Ensure final value is exactly 0
+        mat.SetDissolve(0f);
+
         gameObject.SetActive(false);
     }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {

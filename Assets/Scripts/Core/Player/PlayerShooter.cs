@@ -3,28 +3,46 @@ using UnityEngine;
 public class PlayerShooter : MonoBehaviour
 {
     public BulletSpawner spawner;
-    public float fireRate = 0.15f;
+    public float fireRate = 0.35f;
     public float bulletSpeed = 12f;
+
+    private PlayerHealth health;
 
     float cooldown;
 
+    void Awake()
+    {
+        health = GetComponent<PlayerHealth>();
+    }
+
     void Update()
     {
+        if (health.CurrentHP <= 0) return;
         cooldown -= Time.deltaTime;
 
         if (Input.GetKey(KeyCode.Mouse0) && cooldown <= 0f)
         {
             cooldown = fireRate;
-            Shoot();
+            NormalShoot();
         }
     }
 
-    void Shoot()
+    void NormalShoot()
     {
-        spawner.SpawnBullet(
+        // Convert mouse position to world space
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // Compute direction from player to mouse
+        Vector2 dir = (mouseWorld - transform.position);
+        dir.Normalize();
+
+        BulletFactory.SpawnBullet(
+            spawner,
             transform.position,
-            Vector2.up,
-            bulletSpeed
+            dir,               // ← use the real direction
+            bulletSpeed,
+            BulletFaction.Player,
+            null
         );
     }
 }

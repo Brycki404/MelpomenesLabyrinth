@@ -1,11 +1,13 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(menuName = "Attacks/Circle Burst")]
 public class CircleBurstAttack : Attack
 {
     [Header("Burst Settings")]
-    public int bulletCount = 16;
-    public float bulletSpeed = 6f;
+    public int bulletCount = 12;
+    public float initialSpeed = 2f;
+    public float acceleration = 3f;
 
     private bool fired;
 
@@ -21,7 +23,7 @@ public class CircleBurstAttack : Attack
         base.UpdateAttack(dt);
         Debug.Log("UpdatedAttack");
 
-        // Fire once
+       // Fire once
         if (!fired)
         {
             fired = true;
@@ -31,10 +33,12 @@ public class CircleBurstAttack : Attack
 
     void FireBurst()
     {
-        base.spawner.SpawnCircle(
-            base.part.position,
-            bulletCount,
-            bulletSpeed
-        );
+        Vector2 center = base.part.position;
+        var dirs = PatternMath.CircleDirections(bulletCount);
+
+        foreach (var dir in dirs)
+        {
+            BulletFactory.SpawnBullet(base.spawner, center, dir, initialSpeed, BulletFaction.Enemy);
+        }
     }
 }

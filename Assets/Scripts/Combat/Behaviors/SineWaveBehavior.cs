@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class SineWaveBehavior : IBulletBehavior
 {
-    private Vector2 baseDir;
-    private float frequency;
-    private float amplitude;
-    private float time;
+    public Vector2 baseDir;
+    public float frequency;
+    public float amplitude;
+    public float time;
 
     public SineWaveBehavior(Vector2 baseDir, float frequency, float amplitude)
     {

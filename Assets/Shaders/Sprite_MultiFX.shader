@@ -13,8 +13,8 @@ Shader "Custom/Sprite_MultiFX"
         _DissolveEdgeColor ("Dissolve Edge Color", Color) = (1,0.8,0.2,1)
         _DissolveEdgeWidth ("Dissolve Edge Width", Range(0,0.3)) = 0.1
 
-        _PulseSpeed ("Pulse Speed", Range(0,20)) = 8
-        _PulseStrength ("Pulse Strength", Range(0,1)) = 0.4
+        _PulseSpeed ("Pulse Speed", Range(0,20)) = 0
+        _PulseStrength ("Pulse Strength", Range(0,1)) = 0
 
         _OutlineColor ("Outline Color", Color) = (0,0,0,1)
         _OutlineThickness ("Outline Thickness", Range(0,4)) = 1
@@ -95,8 +95,6 @@ Shader "Custom/Sprite_MultiFX"
             float4 frag (Varyings IN) : SV_Target
             {
                 _FlashColor.a = 0;
-                _DissolveEdgeColor.a = 0;
-                _OutlineColor.a = 0;
 
                 float2 uv = IN.uv;
 
@@ -105,25 +103,44 @@ Shader "Custom/Sprite_MultiFX"
                 float  spriteAlpha = baseTex.a;
                 float4 col = baseTex * IN.color;
 
+                // --- OUTLINE ---
+                float outlineMask = 0;
+                if (_OutlineThickness > 0.001)
+                {
+                    float2 texel = float2(ddx(uv.x), ddy(uv.y)) * _OutlineThickness;
+
+                    float a0 = SampleSprite(uv + float2(texel.x, 0)).a;
+                    float a1 = SampleSprite(uv + float2(-texel.x, 0)).a;
+                    float a2 = SampleSprite(uv + float2(0, texel.y)).a;
+                    float a3 = SampleSprite(uv + float2(0, -texel.y)).a;
+
+                    // Outline where THIS pixel is empty but neighbors are filled
+                    outlineMask = (1 - step(0.01, spriteAlpha)) * step(0.01, a0 + a1 + a2 + a3);
+                }
+
+                float4 outlineCol = float4(_OutlineColor.rgb, outlineMask);
+
                 // --- DISSOLVE ---
                 float noise = SAMPLE_TEXTURE2D(_DissolveTex, sampler_DissolveTex, uv).r;
 
                 // 0 = visible, 1 = dissolved, masked by sprite alpha
-                float dissolveMask = step(_DissolveAmount, noise);
+                float dissolveMask = step(noise, _DissolveAmount);
                 float alphaMaskedDissolve = dissolveMask * spriteAlpha;
 
                 // Fully visible
-                if (_DissolveAmount <= 0.001)
+                if (_DissolveAmount >= 0.999)
                 {
                     // no dissolve
+                    return col;
                 }
                 // Fully dissolved
-                else if (_DissolveAmount >= 0.999)
+                else if (_DissolveAmount <= 0.001)
                 {
-                    // Fade to a solid color instead of transparency
-                    col.rgb = _DissolveEdgeColor.rgb;   // or any color you want
-                    col.a = 1;                          // stay opaque
-                    return col;
+                    // // Fade to a solid color instead of transparency
+                    // col.rgb = _DissolveEdgeColor.rgb;   // or any color you want
+                    // col.a = 0;                          // stay opaque
+                    clip(-1);
+                    // return col;
                 }
                 else
                 {
@@ -132,24 +149,11 @@ Shader "Custom/Sprite_MultiFX"
 
                     float edgeStart = _DissolveAmount - _DissolveEdgeWidth;
                     float edgeEnd   = _DissolveAmount;
-                    float edgeMask = smoothstep(edgeStart, edgeEnd, noise) * (1 - dissolveMask);
+                    float edgeMask = smoothstep(edgeStart, edgeEnd, noise) * (dissolveMask);
 
                     col.rgb = lerp(col.rgb, _DissolveEdgeColor.rgb, edgeMask);
                     col.a   = alphaMaskedDissolve;
                 }
-
-                // --- OUTLINE ---
-                float outlineMask = 0;
-                if (_OutlineThickness > 0.001)
-                {
-                    float2 texel = float2(ddx(uv.x), ddy(uv.y)) * _OutlineThickness;
-                    float a0 = SampleSprite(uv + float2(texel.x, 0)).a;
-                    float a1 = SampleSprite(uv + float2(-texel.x, 0)).a;
-                    float a2 = SampleSprite(uv + float2(0, texel.y)).a;
-                    float a3 = SampleSprite(uv + float2(0, -texel.y)).a;
-                    outlineMask = step(0.01, a0 + a1 + a2 + a3) * (1 - step(0.01, baseTex.a));
-                }
-                float4 outlineCol = _OutlineColor * outlineMask;
 
                 // --- FLASH / PULSE ---
                 float pulse = (sin(_Time.y * _PulseSpeed) * 0.5 + 0.5) * _PulseStrength;

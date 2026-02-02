@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(menuName = "Attacks/Homing Burst")]
 public class HomingBurstAttack : Attack
@@ -48,17 +49,9 @@ public class HomingBurstAttack : Attack
 
         foreach (var dir in dirs)
         {
-            var preset = new BehaviorPreset
+            var behaviors = new List<IBulletBehavior>()
             {
-                Behaviors = new BehaviorRequest[]
-                {
-                    new BehaviorRequest
-                    {
-                        Type = BehaviorType.Homing,
-                        Target = player,
-                        FloatA = turnSpeed
-                    }
-                }
+                new HomingBehavior(player, turnSpeed)
             };
 
             BulletFactory.SpawnBullet(
@@ -67,7 +60,7 @@ public class HomingBurstAttack : Attack
                 dir,
                 bulletSpeed,
                 BulletFaction.Enemy,
-                preset
+                behaviors
             );
         }
     }

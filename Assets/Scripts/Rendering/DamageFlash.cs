@@ -7,6 +7,7 @@ public class DamageFlash : MonoBehaviour
 
     MaterialFX mat;
     float timer;
+    public bool damageFlashEnabled = true;
 
     void Awake()
     {
@@ -17,18 +18,26 @@ public class DamageFlash : MonoBehaviour
     {
         timer = flashDuration;
     }
+    
+    public void StopFlash()
+    {
+        timer = 0f;
+        damageFlashEnabled = false;
+        mat.SetFlash(0f);
+    }
 
     void Update()
     {
         if (timer > 0f)
         {
+            damageFlashEnabled = true;
             timer -= Time.deltaTime;
             float t = timer / flashDuration;
             mat.SetFlash(t);
         }
-        else
+        else if (damageFlashEnabled == true)
         {
-            mat.SetFlash(0f);
+            StopFlash();
         }
     }
 }
