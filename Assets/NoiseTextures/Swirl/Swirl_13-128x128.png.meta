@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Swirl_13-128x128_0: 5995591964314107297
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
