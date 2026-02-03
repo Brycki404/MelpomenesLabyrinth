@@ -89,6 +89,7 @@ public class PauseMenuController : MonoBehaviour
     {
         audioManager.PlayButton();
         SceneManager.LoadScene("TitleScene");
+        Time.timeScale = 1f;
     }
 
     public void OnQuitPressed()
