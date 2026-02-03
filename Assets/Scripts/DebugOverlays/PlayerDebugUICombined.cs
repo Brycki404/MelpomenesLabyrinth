@@ -78,44 +78,52 @@ public class PlayerDebugUICombined : MonoBehaviour
 
     void Start()
     {
-        try
+        if (Application.isEditor)
         {
-            BuildUI();
-            ValidateUI();
-            uiReady = true;
-        }
-        catch (System.SystemException e)
-        {
-            Debug.LogError("[PlayerDebugUI] Failed to build UI: " + e);
-            uiReady = false;
+            // Code to execute only in the editor
+            try
+            {
+                BuildUI();
+                ValidateUI();
+                uiReady = true;
+            }
+            catch (System.SystemException e)
+            {
+                Debug.LogError("[PlayerDebugUI] Failed to build UI: " + e);
+                uiReady = false;
+            }
         }
     }
 
     void Update()
     {
-        try
+        if (Application.isEditor)
         {
-            if (!uiReady) return;
-            if (anim == null) return;
+            // Code to execute only in the editor
+            try
+            {
+                if (!uiReady) return;
+                if (anim == null) return;
 
-            UpdateFPS();
-            UpdateScaleFactor();
+                UpdateFPS();
+                UpdateScaleFactor();
 
-            if (panelAnimation.activeSelf)
-                UpdateAnimationTab();
+                if (panelAnimation.activeSelf)
+                    UpdateAnimationTab();
 
-            if (panelMovement.activeSelf)
-                UpdateMovementTab();
+                if (panelMovement.activeSelf)
+                    UpdateMovementTab();
 
-            if (panelCombat.activeSelf)
-                UpdateCombatTab();
+                if (panelCombat.activeSelf)
+                    UpdateCombatTab();
 
-            if (panelPhysics.activeSelf)
-                UpdatePhysicsTab();
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("Debug UI Update failed: " + e);
+                if (panelPhysics.activeSelf)
+                    UpdatePhysicsTab();
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Debug UI Update failed: " + e);
+            }
         }
     }
 
@@ -454,17 +462,13 @@ public class PlayerDebugUICombined : MonoBehaviour
             Destroy(child.gameObject);
 
         AddState("Idle", anim.CurrentStateName.Contains("Idle"));
-        AddState("Move", anim.CurrentStateName.Contains("Move"));
-        AddState("Dash", anim.CurrentStateName.Contains("Dash"));
-        AddState("Attack", anim.CurrentStateName.Contains("Attack"));
-        AddState("Hurt", anim.CurrentStateName.Contains("Hurt"));
+        AddState("Walk", anim.CurrentStateName.Contains("Walk"));
     }
 
     void AddState(string name, bool active)
     {
-        // Instantiate without parent
         GameObject entry = Instantiate(stateEntryPrefab);
-
+        
         // Ensure RectTransform exists BEFORE parenting
         RectTransform rt = entry.GetComponent<RectTransform>();
         if (rt == null)
@@ -642,69 +646,69 @@ public class PlayerDebugUICombined : MonoBehaviour
         return go;
     }
 
-Button CreateSectionHeader(string title, Transform parent, out GameObject body)
-{
-    // HEADER ROOT (background + button)
-    GameObject headerGO = new GameObject(title + "Header");
+    Button CreateSectionHeader(string title, Transform parent, out GameObject body)
+    {
+        // HEADER ROOT (background + button)
+        GameObject headerGO = new GameObject(title + "Header");
 
-    // Ensure RectTransform exists BEFORE parenting
-    RectTransform hrt = headerGO.GetComponent<RectTransform>();
-    if (hrt == null)
-        hrt = headerGO.AddComponent<RectTransform>();
+        // Ensure RectTransform exists BEFORE parenting
+        RectTransform hrt = headerGO.GetComponent<RectTransform>();
+        if (hrt == null)
+            hrt = headerGO.AddComponent<RectTransform>();
 
-    headerGO.transform.SetParent(parent, false);
+        headerGO.transform.SetParent(parent, false);
 
-    hrt.sizeDelta = new Vector2(380, 24);
-    hrt.anchorMin = new Vector2(0, 1);
-    hrt.anchorMax = new Vector2(0, 1);
-    hrt.pivot = new Vector2(0, 1);
-    hrt.anchoredPosition = new Vector2(10, -10);
+        hrt.sizeDelta = new Vector2(380, 24);
+        hrt.anchorMin = new Vector2(0, 1);
+        hrt.anchorMax = new Vector2(0, 1);
+        hrt.pivot = new Vector2(0, 1);
+        hrt.anchoredPosition = new Vector2(10, -10);
 
-    // Background image (the Graphic)
-    Image bg = headerGO.AddComponent<Image>();
-    bg.color = new Color(0.15f, 0.15f, 0.15f, 1f);
+        // Background image (the Graphic)
+        Image bg = headerGO.AddComponent<Image>();
+        bg.color = new Color(0.15f, 0.15f, 0.15f, 1f);
 
-    // Button
-    Button btn = headerGO.AddComponent<Button>();
+        // Button
+        Button btn = headerGO.AddComponent<Button>();
 
-    // LABEL CHILD (this is where TMP goes)
-    GameObject labelGO = new GameObject("Label");
+        // LABEL CHILD (this is where TMP goes)
+        GameObject labelGO = new GameObject("Label");
 
-    RectTransform lrt = labelGO.GetComponent<RectTransform>();
-    if (lrt == null)
-        lrt = labelGO.AddComponent<RectTransform>();
+        RectTransform lrt = labelGO.GetComponent<RectTransform>();
+        if (lrt == null)
+            lrt = labelGO.AddComponent<RectTransform>();
 
-    labelGO.transform.SetParent(headerGO.transform, false);
+        labelGO.transform.SetParent(headerGO.transform, false);
 
-    lrt.anchorMin = Vector2.zero;
-    lrt.anchorMax = Vector2.one;
-    lrt.offsetMin = Vector2.zero;
-    lrt.offsetMax = Vector2.zero;
+        lrt.anchorMin = Vector2.zero;
+        lrt.anchorMax = Vector2.one;
+        lrt.offsetMin = Vector2.zero;
+        lrt.offsetMax = Vector2.zero;
 
-    TextMeshProUGUI tmp = labelGO.AddComponent<TextMeshProUGUI>();
-    tmp.text = title;
-    tmp.fontSize = 14;
-    tmp.color = Color.white;
-    tmp.alignment = TextAlignmentOptions.MidlineLeft;
-    tmp.margin = new Vector4(6, 0, 0, 0);
+        TextMeshProUGUI tmp = labelGO.AddComponent<TextMeshProUGUI>();
+        tmp.text = title;
+        tmp.fontSize = 14;
+        tmp.color = Color.white;
+        tmp.alignment = TextAlignmentOptions.MidlineLeft;
+        tmp.margin = new Vector4(6, 0, 0, 0);
 
-    // BODY (collapsible content)
-    body = new GameObject(title + "Body");
+        // BODY (collapsible content)
+        body = new GameObject(title + "Body");
 
-    RectTransform brt = body.GetComponent<RectTransform>();
-    if (brt == null)
-        brt = body.AddComponent<RectTransform>();
+        RectTransform brt = body.GetComponent<RectTransform>();
+        if (brt == null)
+            brt = body.AddComponent<RectTransform>();
 
-    body.transform.SetParent(parent, false);
+        body.transform.SetParent(parent, false);
 
-    brt.anchorMin = new Vector2(0, 1);
-    brt.anchorMax = new Vector2(0, 1);
-    brt.pivot = new Vector2(0, 1);
-    brt.sizeDelta = new Vector2(380, 430);
-    brt.anchoredPosition = new Vector2(10, -40);
+        brt.anchorMin = new Vector2(0, 1);
+        brt.anchorMax = new Vector2(0, 1);
+        brt.pivot = new Vector2(0, 1);
+        brt.sizeDelta = new Vector2(380, 430);
+        brt.anchoredPosition = new Vector2(10, -40);
 
-    return btn;
-}
+        return btn;
+    }
 
     GameObject BuildStateEntryPrefab()
     {
@@ -719,6 +723,11 @@ Button CreateSectionHeader(string title, Transform parent, out GameObject body)
 
         Image bg = entry.AddComponent<Image>();
         bg.color = Color.gray;
+
+        // Layout element so VerticalLayoutGroup knows how tall this row is
+        LayoutElement le = entry.AddComponent<LayoutElement>();
+        le.preferredHeight = 24;
+        le.minHeight = 24;
 
         GameObject labelGO = new GameObject("Label");
 

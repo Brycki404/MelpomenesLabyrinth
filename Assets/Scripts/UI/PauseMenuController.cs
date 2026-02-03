@@ -47,6 +47,7 @@ public class PauseMenuController : MonoBehaviour
         {
             panelGO.SetActive(true);
             Time.timeScale = 0f;
+            musicPlayer.StopCombatMusic();
             musicPlayer.PlayPauseMusic();
             StartCoroutine(UIAnimations.FadeScaleIn(group, panel, 0.15f));
         }
@@ -54,6 +55,7 @@ public class PauseMenuController : MonoBehaviour
         {
             Time.timeScale = 1f;
             musicPlayer.StopPauseMusic();
+            musicPlayer.PlayCombatMusic();
             StartCoroutine(CloseRoutine());
         }
     }
@@ -79,10 +81,14 @@ public class PauseMenuController : MonoBehaviour
     {
         TogglePause();
     }
+    
+    public void onTitlePressed()
+    {
+        SceneManager.LoadScene("TitleScene");
+    }
 
     public void OnQuitPressed()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("TitleScreen");
+        Application.Quit();
     }
 }
