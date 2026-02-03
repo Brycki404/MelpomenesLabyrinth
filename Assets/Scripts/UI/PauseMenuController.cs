@@ -17,9 +17,11 @@ public class PauseMenuController : MonoBehaviour
     private GameObject musicPlayerGO;
     private MusicPlayer musicPlayer; 
     private bool isOpen = false;
+    private AudioManager audioManager;
 
     void Start()
     {
+        audioManager = transform.root.GetComponentInChildren<AudioManager>();
         panelGO.SetActive(false);
 
         musicPlayerGO = GameObject.Find("MusicPlayer");
@@ -79,16 +81,19 @@ public class PauseMenuController : MonoBehaviour
 
     public void OnResumePressed()
     {
+        audioManager.PlayButton();
         TogglePause();
     }
     
     public void onTitlePressed()
     {
+        audioManager.PlayButton();
         SceneManager.LoadScene("TitleScene");
     }
 
     public void OnQuitPressed()
     {
+        audioManager.PlayButton();
         Application.Quit();
     }
 }

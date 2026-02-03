@@ -111,8 +111,13 @@ public class BossController : MonoBehaviour
     // ============================================================
     // UNITY LIFECYCLE
     // ============================================================
+
+    private AudioManager audioManager;
+
     void Awake()
     {
+        audioManager = transform.root.GetComponentInChildren<AudioManager>();
+
         leftbs = leftHand.GetComponent<BulletSpawner>();
         rightbs = rightHand.GetComponent<BulletSpawner>();
         headbs = head.GetComponent<BulletSpawner>();
@@ -284,6 +289,7 @@ public class BossController : MonoBehaviour
         if (bossHP <= 0)
             Die();
         else
+            audioManager.PlayBossHit();
             headdf.TriggerFlash();
     }
 
@@ -295,10 +301,12 @@ public class BossController : MonoBehaviour
         if (leftHandHP <= 0)
         {
             leftHandDead = true;
+            audioManager.PlayBossLaugh();
             StartCoroutine(LeftHandDissolveOut());
             DamageBoss(handDeathDamageChunk);
         }
         else
+            audioManager.PlayBossHit();
             leftdf.TriggerFlash();
     }
 
@@ -310,10 +318,12 @@ public class BossController : MonoBehaviour
         if (rightHandHP <= 0)
         {
             rightHandDead = true;
+            audioManager.PlayBossLaugh();
             StartCoroutine(RightHandDissolveOut());
             DamageBoss(handDeathDamageChunk);
         }
         else
+            audioManager.PlayBossHit();
             rightdf.TriggerFlash();
     }
 
@@ -786,6 +796,7 @@ public class BossController : MonoBehaviour
     void Die()
     {
         Debug.Log("Boss defeated!");
+        audioManager.PlayBossDeath();
         StopAllCoroutines();
         // TODO: death animation, loot, etc.
         StartCoroutine(BossDiedDissolveOut());

@@ -12,9 +12,11 @@ public class PlayerHealth : MonoBehaviour
     private DashMovement dash;
     private DamageFlash damageFlash;
     private MaterialFX mat;
+    private AudioManager audioManager;
 
-    private void Awake()
+    void Awake()
     {
+        audioManager = transform.root.GetComponentInChildren<AudioManager>();
         dash = GetComponent<DashMovement>();
         damageFlash = GetComponentInChildren<DamageFlash>();
         mat = GetComponentInChildren<MaterialFX>();
@@ -54,10 +56,12 @@ public class PlayerHealth : MonoBehaviour
         if (CurrentHP <= 0)
         {
             CurrentHP = 0;
+            audioManager.PlayDeath();
             Die();
             return;
         }
 
+        audioManager.PlayHit();
         damageFlash.TriggerFlash();
         StartCoroutine(InvulnRoutine());
     }

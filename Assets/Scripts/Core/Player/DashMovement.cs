@@ -29,9 +29,11 @@ public class DashMovement : MonoBehaviour
 
     public bool IsDashing => dashTimer > 0f;
     public bool IsInvulnerable { get; private set; }
+    private AudioManager audioManager;
 
     void Awake()
     {
+        audioManager = transform.root.GetComponentInChildren<AudioManager>();
         rb = GetComponent<Rigidbody2D>();
         controller = GetComponent<PlayerController>();
         health = GetComponent<PlayerHealth>();
@@ -105,6 +107,8 @@ public class DashMovement : MonoBehaviour
 
         // Reset i-frames
         IsInvulnerable = false;
+
+        audioManager.PlayDodge();
     }
 
     public void EndDash()

@@ -34,6 +34,11 @@ public class AudioManager : MonoBehaviour
         else 
             Destroy(gameObject);
     }
+
+    public void SetVolume(float v)
+    {
+        SFXSource.volume = v;
+    }
     
     public void PlaySFX(AudioClip clip)
     {   
