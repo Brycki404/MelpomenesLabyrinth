@@ -108,7 +108,7 @@ public class DashMovement : MonoBehaviour
         // Reset i-frames
         IsInvulnerable = false;
 
-        audioManager.PlayDodge();
+        //audioManager.PlayDodge();
     }
 
     public void EndDash()

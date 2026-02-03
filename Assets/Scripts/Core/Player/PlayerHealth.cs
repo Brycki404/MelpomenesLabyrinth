@@ -56,7 +56,7 @@ public class PlayerHealth : MonoBehaviour
         if (CurrentHP <= 0)
         {
             CurrentHP = 0;
-            audioManager.PlayDeath();
+            //audioManager.PlayDeath();
             Die();
             return;
         }
