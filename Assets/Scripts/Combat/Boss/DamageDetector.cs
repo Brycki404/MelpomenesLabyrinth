@@ -11,7 +11,6 @@ public class DamageDetector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("TRIGGER!");
         var GO = other.gameObject;
         var bullet = GO.GetComponent<Bullet>();
         if (bullet != null && (bullet.Faction == BulletFaction.Player || bullet.Faction == BulletFaction.Neutral))

@@ -16,7 +16,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Awake()
     {
-        audioManager = transform.root.GetComponentInChildren<AudioManager>();
+        audioManager = FindFirstObjectByType<AudioManager>();
         dash = GetComponent<DashMovement>();
         damageFlash = GetComponentInChildren<DamageFlash>();
         mat = GetComponentInChildren<MaterialFX>();
@@ -43,13 +43,16 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void Damage(int amount, GameObject hit)
+    public void Damage(int amount, GameObject hit, Bullet bullet)
     {
         if (CurrentHP <= 0) return;
         if (IsInvulnerable) return;
 
-        if (hit)
+        if (hit != null && bullet != null)
             hit.gameObject.SetActive(false);
+
+        if (hit.name == "Mask")
+            amount = CurrentHP;
 
         CurrentHP -= amount;
         
@@ -111,6 +114,6 @@ public class PlayerHealth : MonoBehaviour
         var GO = other.gameObject;
         var bullet = GO.GetComponent<Bullet>();
         if ((bullet != null && (bullet.Faction == BulletFaction.Enemy || bullet.Faction == BulletFaction.Neutral)) || other.CompareTag("BossAttack"))
-            Damage(1, GO);
+            Damage(1, GO, bullet);
     }
 }

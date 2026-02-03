@@ -103,6 +103,7 @@ public class BossController : MonoBehaviour
     // ============================================================
     [Header("Slam")]
     public float slamLiftHeight = 1.2f;
+    public float slamDownHeight = 3.0625f;
     public float slamTelegraphTime = 0.4f;
     public float slamShakeStrength = 0.15f;
     public float slamDownTime = 0.12f;
@@ -116,8 +117,6 @@ public class BossController : MonoBehaviour
 
     void Awake()
     {
-        audioManager = transform.root.GetComponentInChildren<AudioManager>();
-
         leftbs = leftHand.GetComponent<BulletSpawner>();
         rightbs = rightHand.GetComponent<BulletSpawner>();
         headbs = head.GetComponent<BulletSpawner>();
@@ -142,6 +141,8 @@ public class BossController : MonoBehaviour
 
     void Start()
     {
+        audioManager = FindFirstObjectByType<AudioManager>();
+
         bossHP = bossMaxHP;
         leftHandHP = handMaxHP;
         rightHandHP = handMaxHP;
@@ -687,7 +688,15 @@ public class BossController : MonoBehaviour
         startDir *= new Vector2(0f, -1f);
         float startAngle = PatternMath.DirectionToAngle(startDir);
         Vector3 pos = new Vector3(startPos.x, startPos.y, -1f);
-        float gravity = -4.9f;
+        float gravity = -9.8f;
+
+        SpriteRenderer sr = hand.GetComponentInChildren<SpriteRenderer>();
+        AnimationClipPlayer anim = hand.GetComponentInChildren<AnimationClipPlayer>();
+        anim.Play(leftReleaseClip);
+        if (hand.gameObject.name.Contains("LeftHand"))
+            sr.flipX = false;
+        else if (hand.gameObject.name.Contains("RightHand"))
+            sr.flipX = true;
 
         var behaviors = new List<IBulletBehavior>()
         {
@@ -702,7 +711,7 @@ public class BossController : MonoBehaviour
 
             Vector3 thispos = (Vector2) pos + dir.normalized * 24f / 16f;
 
-            BulletFactory.SpawnBullet(spawner, thispos, dir, 3f, BulletFaction.Enemy, behaviors);
+            BulletFactory.SpawnBullet(spawner, thispos, dir, 5f, BulletFaction.Enemy, behaviors);
         }
 
         // 5. Recovery delay
@@ -752,12 +761,13 @@ public class BossController : MonoBehaviour
         }
 
         // Slam
+        Vector3 slamPos = basePos - new Vector3(0, slamDownHeight, 0);
         t = 0f;
         while (t < slamDownTime)
         {
             t += Time.deltaTime;
             float p = t / slamDownTime;
-            hand.localPosition = Vector3.Lerp(liftedPos, basePos, p);
+            hand.localPosition = Vector3.Lerp(liftedPos, slamPos, p);
             yield return null;
         }
 
@@ -771,7 +781,7 @@ public class BossController : MonoBehaviour
         int bulletCount = 12;
         float bulletSpeed = 5f;
         float padding = 1.375f / bulletCount;
-        float gravity = -9.8f / 16f;
+        float gravity = -9.8f;
 
         Vector2 center = hand.localPosition - new Vector3(0, 1.3125f / 2f, 0);
 
@@ -784,11 +794,13 @@ public class BossController : MonoBehaviour
 
         foreach (var offset in offsets)
         {
-            float randomAngle = 270f + Random.Range(-30f, 30f);
+            float randomAngle = 270f + Random.Range(-30, 30f);
             Vector2 dir = PatternMath.AngleToDirection(randomAngle);
-
+            float xPower = dir.normalized.x * bulletSpeed;
+            dir = Vector2.right;
+            
             Vector2 pos = center + offset;
-            BulletFactory.SpawnBullet(spawner, pos, dir, bulletSpeed, BulletFaction.Enemy, behaviors);
+            BulletFactory.SpawnBullet(spawner, pos, dir, xPower, BulletFaction.Enemy, behaviors);
         }
 
         yield return StartCoroutine(HandRecoil(hand, basePos, Vector2.down));

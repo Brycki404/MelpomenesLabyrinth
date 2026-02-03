@@ -14,18 +14,17 @@ public class PauseMenuController : MonoBehaviour
     public Slider musicSlider;
     public Slider sfxSlider;
 
-    private GameObject musicPlayerGO;
-    private MusicPlayer musicPlayer; 
-    private bool isOpen = false;
+    private MusicPlayer musicPlayer;
     private AudioManager audioManager;
+    private bool isOpen = false;
+
 
     void Start()
     {
-        audioManager = transform.root.GetComponentInChildren<AudioManager>();
         panelGO.SetActive(false);
 
-        musicPlayerGO = GameObject.Find("MusicPlayer");
-        musicPlayer = musicPlayerGO.GetComponent<MusicPlayer>();
+        audioManager = FindFirstObjectByType<AudioManager>();
+        musicPlayer = FindFirstObjectByType<MusicPlayer>();
 
         // Initialize sliders from AudioBus
         musicSlider.value = AudioBus.Instance.musicVolume;
@@ -77,6 +76,7 @@ public class PauseMenuController : MonoBehaviour
     public void OnSFXVolumeChanged(float v)
     {
         AudioBus.Instance.sfxVolume = v;
+        audioManager.SetVolume(v);
     }
 
     public void OnResumePressed()

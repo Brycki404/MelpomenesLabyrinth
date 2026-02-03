@@ -39,8 +39,18 @@ public class GhostTrail : MonoBehaviour
         {
             t += spawnInterval;
 
+            var ghostsParent = GameObject.Find("Ghosts").transform;
+
             // Spawn ghost
             GameObject g = Instantiate(ghostPrefab, transform.position, transform.rotation);
+            if (ghostsParent == null)
+            {
+                Debug.LogError("Ghosts object NOT found as a direct child of root");
+            }
+            else
+            {
+                g.transform.SetParent(ghostsParent, true);
+            }
             SpriteRenderer gsr = g.GetComponentInChildren<SpriteRenderer>();
 
             gsr.sprite = playerSR.sprite;

@@ -33,7 +33,7 @@ public class DashMovement : MonoBehaviour
 
     void Awake()
     {
-        audioManager = transform.root.GetComponentInChildren<AudioManager>();
+        audioManager = FindFirstObjectByType<AudioManager>();
         rb = GetComponent<Rigidbody2D>();
         controller = GetComponent<PlayerController>();
         health = GetComponent<PlayerHealth>();
