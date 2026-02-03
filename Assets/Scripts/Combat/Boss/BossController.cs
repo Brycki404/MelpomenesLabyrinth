@@ -289,8 +289,10 @@ public class BossController : MonoBehaviour
         if (bossHP <= 0)
             Die();
         else
+        {
             audioManager.PlayBossHit();
             headdf.TriggerFlash();
+        }
     }
 
     public void DamageLeftHand(float amount)
@@ -306,8 +308,10 @@ public class BossController : MonoBehaviour
             DamageBoss(handDeathDamageChunk);
         }
         else
+        {
             audioManager.PlayBossHit();
             leftdf.TriggerFlash();
+        }
     }
 
     public void DamageRightHand(float amount)
@@ -323,8 +327,10 @@ public class BossController : MonoBehaviour
             DamageBoss(handDeathDamageChunk);
         }
         else
+        {
             audioManager.PlayBossHit();
             rightdf.TriggerFlash();
+        }
     }
 
     // ============================================================
